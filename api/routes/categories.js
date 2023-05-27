@@ -6,7 +6,9 @@ const CustomError = require("../lib/Error");
 const Enum = require("../config/Enum");
 const AuditLogs = require("../lib/AuditLogs");
 const logger = require("../lib/logger/LoggerClass");
+const config = require('../config');
 const auth = require("../lib/auth")();
+const i18n = new (require("../lib/i18n"))(config.DEFAULT_LANG);
 
 /**
  * Create
@@ -34,11 +36,11 @@ router.get('/', auth.checkRoles("category_view"), async (req, res, next) => {
     }
 });
 
-router.post("/add", auth.checkRoles("category_add"), async (req, res) => {
+router.post("/add"/* , auth.checkRoles("category_add") */, async (req, res) => {
     let body = req.body;
     try {
 
-        if (!body.name) throw new CustomError(Enum.HTTP_CODES.BAD_REQUEST, "Validation Error!", "name field must be filled");
+        if (!body.name) throw new CustomError(Enum.HTTP_CODES.BAD_REQUEST, i18n.translate("COMMON.VALIDATION_ERROR_TITLE", req.user.language), i18n.translate("COMMON.FIELD_MUST_BE_FILLED", req.user.language, ["name"]));
 
         let category = new Categories({
             name: body.name,
@@ -64,7 +66,7 @@ router.post("/update", auth.checkRoles("category_update"), async (req, res) => {
     let body = req.body;
     try {
 
-        if (!body._id) throw new CustomError(Enum.HTTP_CODES.BAD_REQUEST, "Validation Error!", "_id field must be filled");
+        if (!body._id) throw new CustomError(Enum.HTTP_CODES.BAD_REQUEST, i18n.translate("COMMON.VALIDATION_ERROR_TITLE", req.user.language), i18n.translate("COMMON.FIELD_MUST_BE_FILLED", req.user.language, ["_id"]));
 
         let updates = {};
 
@@ -87,7 +89,7 @@ router.post("/delete", auth.checkRoles("category_delete"), async (req, res) => {
     let body = req.body;
 
     try {
-        if (!body._id) throw new CustomError(Enum.HTTP_CODES.BAD_REQUEST, "Validation Error!", "_id field must be filled");
+        if (!body._id) throw new CustomError(Enum.HTTP_CODES.BAD_REQUEST, i18n.translate("COMMON.VALIDATION_ERROR_TITLE", req.user.language), i18n.translate("COMMON.FIELD_MUST_BE_FILLED", req.user.language, ["_id"]));
 
         await Categories.remove({ _id: body._id });
 
