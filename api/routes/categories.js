@@ -36,7 +36,7 @@ router.get('/', auth.checkRoles("category_view"), async (req, res, next) => {
     }
 });
 
-router.post("/add"/* , auth.checkRoles("category_add") */, async (req, res) => {
+router.post("/add", auth.checkRoles("category_add"), async (req, res) => {
     let body = req.body;
     try {
 
