@@ -14,6 +14,7 @@ class Response {
     }
 
     static errorResponse(error, lang) {
+        console.error(error);
         if (error instanceof CustomError) {
             return {
                 code: error.code,
