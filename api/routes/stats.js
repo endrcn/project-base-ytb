@@ -28,7 +28,7 @@ router.post("/auditlogs", async (req, res) => {
         let result = await AuditLogs.aggregate([
             { $match: filter },
             { $group: { _id: { email: "$email", proc_type: "$proc_type" }, count: { $sum: 1 } } },
-            { $sort: { coun: -1 } }
+            { $sort: { count: -1 } }
         ]);
 
         res.json(Response.successResponse(result));
