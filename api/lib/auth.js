@@ -61,7 +61,7 @@ module.exports = function () {
             return (req, res, next) => {
 
                 let i = 0;
-                let privileges = req.user.roles.map(x => x.key);
+                let privileges = req.user.roles.filter(x => x).map(x => x.key);
 
                 while (i < expectedRoles.length && !privileges.includes(expectedRoles[i])) i++;
 
