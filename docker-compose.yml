@@ -1,0 +1,10 @@
+services:
+  app:
+    image: endrcn/pb-ytb:latest
+    environment:
+      - CONNECTION_STRING=mongodb://host.docker.internal:27017/project_base_ytb
+      - LOG_LEVEL=info
+      - FILE_UPLOAD_PATH=/data/uploads
+    ports:
+      - 3000:3000
+    # network_mode: host
